@@ -31,7 +31,7 @@ await page.evaluate(() => document.fonts.ready);
 const duration = await page.evaluate(() => window.__duration);
 
 if (args.has("--sheet")) {
-  const times = [0.2, 1.8, 7.9, 10.6, 12.3, 14.8, 15.5, 16.4, 17.9, 18.3, 22.4, 24.0, 26.5, 29.0, 31.5, 32.9];
+  const times = [0.2, 1.8, 5.6, 6.4, 8.0, 9.2, 11.5, 12.3, 14.2, 15.1, 17.6, 19.0, 21.6, 24.2, 27.0, 28.6, 30.0, 32.2, 33.4, 34.3, 35.5, 36.1, 36.9, 39.5];
   const shots = [];
   for (const t of times) {
     await page.evaluate(t => window.__seek(t), t);

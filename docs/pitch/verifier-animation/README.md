@@ -1,28 +1,33 @@
 # Verifier + memory cutaway
 
-A 33-second animated cutaway for the Hightouch pitch video. It covers this stretch of the
-script, timed at a normal speaking pace (about 142 words per minute, with the beats the
-script asks for):
+A 40-second animated cutaway for the Hightouch pitch video, covering 3:17-3:57 of the cut.
+It is timed to the recorded take (138 words in about 40 s, with a short breath between lines):
 
 | Start | End | Line |
 |---|---|---|
-| 0.0 | 3.8 | That verifier is the part I care most about. |
-| 4.8 | 8.6 | So mine doesn't just use an LLM as a judge. |
-| 8.6 | 12.0 | It runs seasonal decomposition against historical baselines — |
-| 12.5 | 18.8 | and if an insight can't beat its own baseline, it never makes it out of the run. |
-| 19.6 | 22.6 | Every run also writes back structured memory. |
-| 22.6 | 25.6 | Which audiences don't convert regardless of offer. |
-| 25.6 | 27.6 | Which ones respond to SMS. |
-| 27.6 | 31.6 | So the next run starts smarter than the last one. |
-| 31.6 | 33.0 | hold |
+| 0.0 | 3.0 | That verification agent is the part I care the most about. |
+| 3.3 | 6.0 | And so mine doesn't just use an LLM as a judge — |
+| 6.0 | 8.5 | it also runs seasonal decomposition against historical baselines. |
+| 8.8 | 14.0 | And so if an insight can't beat its own baseline, it never ends up making it out of the run. |
+| 14.3 | 17.0 | And also, every run also writes back to structured memory. |
+| 17.3 | 20.2 | For example, which audiences don't convert regardless of the offer, |
+| 20.2 | 22.5 | or which ones don't respond to SMS. |
+| 22.8 | 27.4 | And so I always make sure that the next run always starts smarter than the last one. |
+| 27.7 | 31.0 | And another thing to note is that the data never actually moves. |
+| 31.3 | 34.3 | The agents are able to query the warehouse through an MCP, |
+| 34.6 | 40.0 | and then the AI goes to where that context actually lives, instead of copying the context to the AI. |
 
 What is on screen, in order: the four-agent chain with the Verifier lit; an "LLM as judge"
-card that approves a Q4 spike and gets struck through; the two-year conversions series
-decomposed by STL into trend, seasonal and residual; the baseline band; the Q4 candidate
-stamped KILLED (`explained_by_seasonality`) and dropped; the SMS candidate stamped
-VERIFIED (`real_lift`) and passed to a human; the memory table filling through the
-verified-only write gate; the dead-end audience and the SMS audience; the loop back to the
-Explorer, and the next run's hypotheses with two skipped from memory and one boosted.
+card that grounds a Q4 spike, then collapses into a chip as the STL decomposition is added
+beside it; the two-year conversions series split into trend, seasonal and residual; the
+baseline band; the Q4 candidate stamped KILLED (`explained_by_seasonality`) and dropped; the
+cart-abandon candidate stamped VERIFIED (`real_lift`) and passed to a human; the memory
+table filling through the verified-only write gate, including the audience that never
+converts and the audience that never answers SMS; the loop back to the Explorer, and the
+next run's hypotheses with three skipped from memory and one boosted. The close is the
+warehouse behind the MCP boundary: a `run_metric` call crosses to the data, one number comes
+back into the context window, and a ghosted "copy every row" attempt is crossed out at the
+boundary.
 
 ## Files
 
