@@ -12,14 +12,15 @@ Covers the "Here's where it gets interesting" section of the pitch. Two delivera
 
 > So here's the whole thing, end to end. You give it a business goal. The agents read the
 > warehouse, rank the opportunities, and the verifier kills the ones that would have
-> happened anyway. Whatever survives gets drafted, launched, and measured against a
-> holdout, and the result goes back into memory.
+> happened anyway. Each opportunity that survives gets drafted into a campaign, launched,
+> and measured against a control group, and the result goes back into memory.
 >
 > Here's where it gets interesting. My agent wrote a rule: don't text anyone more than
 > twice a week.
 
-That is 60 words before the existing "Here's where it gets interesting" line, which is
-about 13 s at the pace of your recorded take. If it runs long, cut "and the result goes
+That is 64 words before the existing "Here's where it gets interesting" line, which is
+about 13 s at the pace of your recorded take. If "control group" feels too clinical on
+camera, "measured against customers who didn't get it" says the same thing in plain words. If it runs long, cut "and the result goes
 back into memory" (saves ~2 s). The bridge deliberately ends on "launched, and measured",
 because the rule is a *launch* concern, so the segue lands on the same word.
 
@@ -29,7 +30,7 @@ because the rule is a *launch* concern, so the segue lands on the same word.
 |---|---|---|---|
 | 1 | "You give it a business goal… the agents rank the opportunities" | `shots/dash-01-dashboard.png` | Dashboard: proven vs ruled-out, the verifier's rejections up top |
 | 2 | "…the verifier kills the ones that would have happened anyway" | `shots/dash-02-sms-opportunity-analysis.png` | The SMS opportunity with lift, p-value, and the Approve & launch button |
-| 3 | "Whatever survives gets drafted, launched, and measured" | `shots/dash-04-approve-launch.png` then `shots/dash-05-launched.png` | Approving compiles the audience and drafts variants; Launched shows +10pp vs holdout |
+| 3 | "Each opportunity that survives gets drafted into a campaign, launched, and measured" | `shots/dash-04-approve-launch.png` then `shots/dash-05-launched.png` | Approving compiles the audience and drafts variants; Launched shows +10pp vs holdout |
 | 4 | "My agent wrote a rule: don't text anyone more than twice a week" | `shots/dash-06-settings-guardrails.png` | Settings → Guardrails → `frequency_cap`: "Max 2 messages per customer per 7 days, machine-enforced, not an LLM judgment" |
 | 5 | "But an LLM can't enforce that… the words can't tell you how many texts that person already got" | (talking head, or hold on shot 4) | |
 | 6 | "So the cap has to be counted, in code, in two places" | `shots/dash-07-decision-bundle-json.png` | The decision bundle the phone downloads: `weekly_2 · max 2 · P7D`, plus the one SMS already logged this week under `recent_sends` |
