@@ -24,6 +24,32 @@ camera, "measured against customers who didn't get it" says the same thing in pl
 back into memory" (saves ~2 s). The bridge deliberately ends on "launched, and measured",
 because the rule is a *launch* concern, so the segue lands on the same word.
 
+## The rest of the segment, in the take's voice
+
+The original copy is accurate but written. This is the same argument at the pace and
+register of the recorded take:
+
+> So the cap has to actually be counted, in code, and it has to be counted in two places.
+>
+> [dashboard] Every text the system sends gets logged. So on the backend, checking the rule
+> is basically just counting how many this person already got this week.
+>
+> [phone] But out here, the phone is deciding on its own whether to show the message. It's
+> not calling back to the server. So it keeps its own count too.
+>
+> And so both sides are enforcing the exact same rule, no more than two a week. Because if
+> the backend only knows about the texts it sent, and the phone only knows about what it
+> showed, then neither one actually knows this person is already at two. And they get a
+> third.
+>
+> [revisit → suppressed] And there it is. This person already got two this week, so the
+> message never fires. That was decided right on the phone.
+
+The failure case is phrased to match the captures: the 2/2 on the phone is one SMS the
+backend logged plus one message the phone showed, so the risk is each side seeing only
+its own half. Shorter alternative for the long sentence: "Because if only one side is
+counting, this person ends up with a third."
+
 ## Shot list, in script order
 
 | # | Script beat | Screenshot | What you're pointing at |
