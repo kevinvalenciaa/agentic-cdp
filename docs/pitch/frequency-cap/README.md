@@ -52,29 +52,32 @@ counting, this person ends up with a third."
 
 ## Shot list, in script order
 
-| # | Script beat | Screenshot | What you're pointing at |
-|---|---|---|---|
-| 1 | "You give it a business goal… the agents rank the opportunities" | `shots/dash-01-dashboard.png` | Dashboard: proven vs ruled-out, the verifier's rejections up top |
-| 2 | "…the verifier kills the ones that would have happened anyway" | `shots/dash-02-sms-opportunity-analysis.png` | The SMS opportunity with lift, p-value, and the Approve & launch button |
-| 3 | "Each opportunity that survives gets drafted into a campaign, launched, and measured" | `shots/dash-04-approve-launch.png` then `shots/dash-05-launched.png` | Approving compiles the audience and drafts variants; Launched shows +10pp vs holdout |
-| 4 | "My agent wrote a rule: don't text anyone more than twice a week" | `shots/dash-06-settings-guardrails.png` | Settings → Guardrails → `frequency_cap`: "Max 2 messages per customer per 7 days, machine-enforced, not an LLM judgment" |
-| 5 | "But an LLM can't enforce that… the words can't tell you how many texts that person already got" | (talking head, or hold on shot 4) | |
-| 6 | "So the cap has to be counted, in code, in two places" | `shots/dash-07-decision-bundle-json.png` | The decision bundle the phone downloads: `weekly_2 · max 2 · P7D`, plus the one SMS already logged this week under `recent_sends` |
-| 7 | "[dashboard] Every text the system sends gets logged, so on the backend, checking the rule is just counting" | `shots/dash-08-backend-count-sql.png` | `activation/caps.ts`: one `GROUP BY customer_id HAVING COUNT(*) >= max` over `campaign_sends`, using the same constant as the bundle |
-| 8 | "[phone] out here, the phone is deciding on its own, without calling back to the server" | `shots/phone-01-visit1-offer-delivered.png` | First Home visit: the offer is delivered (arm B, the modal) |
-| 9 | "…so it keeps its own tally too" | `shots/phone-03-debug-visit1-delivered.png` | Debug panel: `ledger 1 entries`, `LAST DECISION delivered · c_second_purchase_sms · arm B` |
-| 10 | "Both sides are enforcing the same rule" | `shots/phone-04-product-open.png` | Open a product (this is the "revisit": leaving Home and coming back is a fresh decision) |
-| 11 | "[revisit → suppressed] And there it is, this person already got two this week, so the message never fires" | `shots/phone-05-revisit-suppressed.png` | Second Home visit: no offer. The hero surface renders nothing |
-| 12 | "Decided right on the device" | `shots/phone-06-debug-suppressed.png` | Debug panel: `suppressed · c_second_purchase_sms`, reason `frequency_cap:weekly_2:2/2`, trail `capped - frequency_cap:weekly_2:2/2` |
-| 13 | (optional tag, if you want to close the loop) | `shots/dash-09-suppressions-reported-back.png` | The phone's receipts, flushed to `/api/ingest` and tallied in `runs/delivery/suppressions.json`: 2 decisions, 1 delivered, 1 suppressed under `weekly_2` |
+| Script | On screen |
+|---|---|
+| "So here's the whole thing, end to end. You give it a business goal." | Talking head, or `shots/dash-01-dashboard.png` |
+| "The agents read the warehouse, rank the opportunities, and the verifier kills the ones that would have happened anyway." | `shots/dash-01-dashboard.png`. Left column: ranked survivors. Right column "Ruled out overnight": the verifier's kills. |
+| "Each opportunity that survives gets drafted into a campaign," | `shots/dash-02-sms-opportunity-analysis.png`, then `shots/dash-04-approve-launch.png` on "drafted" ("Compiling the audience… drafts on-brand message variants"). |
+| "launched, and measured against a control group, and the result goes back into memory." | `shots/dash-05-launched.png`: "live · measuring", +10.0pp lift, holdout vs treatment. |
+| "Here's where it gets interesting. My agent wrote a rule: don't text anyone more than twice a week." | `shots/dash-06-settings-guardrails.png`, landing on the `frequency_cap` card. |
+| "But an LLM can't enforce that. It's judging the words in the message, and the words can't tell you how many texts that person already got." | Hold on the card; its text ends "machine-enforced… not an LLM judgment". |
+| "So the cap has to actually be counted, in code, and it has to be counted in two places." | `shots/dash-07-decision-bundle-json.png`: the `weekly_2 · max 2 · P7D` block, and `recent_sends` below. |
+| "[dashboard] Every text the system sends gets logged." | Stay on `dash-07`, pointing at `recent_sends`. |
+| "So on the backend, checking the rule is basically just counting how many this person already got this week." | `shots/dash-08-backend-count-sql.png`: the highlighted `GROUP BY … HAVING COUNT(*) >= max`. |
+| "[phone] But out here, the phone is deciding on its own whether to show the message. It's not calling back to the server." | `shots/phone-01-visit1-offer-delivered.png`: first visit, the offer shows. |
+| "So it keeps its own count too." | `shots/phone-03-debug-visit1-delivered.png`: `ledger 1 entries`, `LAST DECISION delivered`. |
+| "And so both sides are enforcing the exact same rule, no more than two a week." | Split screen: `dash-07` (weekly_2) beside `phone-03` (ledger). |
+| "Because if the backend only knows about the texts it sent, and the phone only knows about what it showed, then neither one actually knows this person is already at two. And they get a third." | `shots/phone-04-product-open.png`: the revisit action. Leaving Home and coming back triggers the next decision. |
+| "[revisit → suppressed] And there it is. This person already got two this week, so the message never fires." | `shots/phone-05-revisit-suppressed.png`: back on Home, no offer. |
+| "That was decided right on the phone." | `shots/phone-06-debug-suppressed.png`: `suppressed · c_second_purchase_sms`, reason `frequency_cap:weekly_2:2/2`. Hold on the reason line. |
+| Optional tag, no script line | `shots/dash-09-suppressions-reported-back.png`: the phone's receipt tallied on the server, 1 suppressed under weekly_2. |
 
-`shots/dash-03-sms-opportunity-plan.png` and `shots/phone-02-home-after-offer.png` are
-spares (the Plan tab before launch, and Home right after dismissing the offer).
+Spares: `shots/dash-03-sms-opportunity-plan.png` (Plan tab before launch) and
+`shots/phone-02-home-after-offer.png` (Home right after dismissing the offer).
 
-The 2/2 in shot 12 is one SMS the backend logged (it rides along in the bundle's
-`recent_sends`) plus the in-app delivery the phone recorded in its own ledger on the first
-visit. That is the "counted in two places" line made literal: the server's count and the
-device's count are merged on the device, and the device decides.
+The 2/2 on the phone's reason line is one SMS the backend logged (it rides along in the
+bundle's `recent_sends`) plus the in-app delivery the phone recorded in its own ledger on
+the first visit. The server's count and the device's count are merged on the device, and
+the device decides.
 
 ## Reproducing the captures
 
