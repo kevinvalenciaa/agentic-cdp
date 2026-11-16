@@ -65,7 +65,7 @@ Requires Node 20+, pnpm 9.15.2, Python 3.11+, and [uv](https://docs.astral.sh/uv
 ```bash
 pnpm run setup        # install Node and Python deps
 pnpm seed             # build the synthetic warehouse and plant ground truth
-pnpm ground-truth     # prove the planted signals are recoverable (10/10)
+pnpm ground-truth     # prove the planted signals are recoverable (13/13)
 ```
 
 Commands marked *(key)* need `ANTHROPIC_API_KEY` in `.env`.

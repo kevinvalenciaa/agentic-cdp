@@ -1,8 +1,7 @@
 # ARCHITECTURE.md - the system, top-down
 
-Study material, not doc theater: this walks the whole system in plain language, names the
-real files, and includes the gaps. If you can explain every section here out loud, you can
-defend the project under questioning.
+This walks the whole system top-down in plain language, names the real files, and is
+explicit about the known gaps.
 
 ## 1. Entry points
 
@@ -134,11 +133,11 @@ orchestrator + investigators; **Haiku** (`models.fanout`) for the explorer, fan-
 classification, the bare judge, groundedness, guardrails, and creative drafting. Every
 API call lands in `CostLedger` (`shared/cost.ts`); engine results carry `costByStage`
 (explorer / bareLlm / groundedness) and harness runs report `costUsd` + `costByModel`.
-An unused Opus escalation tier was removed rather than left as résumé config.
+An unused Opus escalation tier was removed rather than left as dead config.
 
 ## 9. Build-vs-buy
 
 Every dependency decision (TypeScript-first + Python stats over MCP, custom harness vs
 LangGraph, step journal vs Inngest-now, typed memory vs embeddings, fan-out vs vector DB)
-is argued in [`DESIGN_DECISIONS.md`](DESIGN_DECISIONS.md) - that file is the interview
-answer sheet for "why didn't you just use X?".
+is argued in [`DESIGN_DECISIONS.md`](DESIGN_DECISIONS.md), which answers "why didn't you
+just use X?" for each one.
